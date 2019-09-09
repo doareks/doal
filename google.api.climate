@@ -1,0 +1,16 @@
+var collection = ee.ImageCollection("COPERNICUS/S5P/OFFL/L3_CLOUD")
+  .select('cloud_fraction')
+  .filterDate('2018-10-15', '2018-10-18');
+
+var val_max = 0.95;
+var val_min = 0;
+var band_viz = {
+ min: val_min,
+ max: val_max,
+ opacity: 1.0,
+ palette: ["black", "blue", "purple", "cyan", "green", "yellow", "red"]
+};
+
+Map.addLayer(ee.Image(0).byte(), {}, "black background");
+Map.addLayer(collection.mean(), band_viz, 's5p');
+Map.setCenter(-58.14, -10.47, 2);
